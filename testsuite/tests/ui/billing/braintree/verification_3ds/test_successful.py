@@ -19,6 +19,6 @@ def test_successful(custom_card, braintree, cc_number, verify_3ds, invoice):
         - Trigger billing via API
     """
     custom_card(cc_number, verify_3ds=verify_3ds)
-
+    print("Invoice charge")
     invoice = invoice.charge()
     braintree.assert_payment(invoice)
