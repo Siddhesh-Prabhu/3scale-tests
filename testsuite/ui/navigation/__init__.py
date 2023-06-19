@@ -109,14 +109,15 @@ class Navigator:
                 f"An error occurred during backtracking of {self.page_chain.popleft()}. "
                 f"None prerequisite was found for {self.page_chain.pop()}"
             )
-        page = self.new_page(cls, **kwargs)
-        self.page_chain.append(page)
-        if page.is_displayed:
-            if len(self.page_chain) == 1:
-                page.browser.refresh()
-                page.wait_displayed()
-            return
-        self._backtrace(page.prerequisite(), **kwargs)
+        else:
+            page = self.new_page(cls, **kwargs)
+            self.page_chain.append(page)
+            if page.is_displayed:
+                if len(self.page_chain) == 1:
+                    page.browser.refresh()
+                    page.wait_displayed()
+                return
+            self._backtrace(page.prerequisite(), **kwargs)
 
     # pylint: disable=protected-access
     def _perform_steps(self, **kwargs):
