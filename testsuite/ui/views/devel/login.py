@@ -74,7 +74,7 @@ class ReCaptcha(View):
         self.check_box.click()
         # Recaptcha check confirmation needs waits at least 0.5 sec to finish recaptcha confirmation flow to enable
         # the verify button
-        sleep(1)
+        sleep(10)
 
     @property
     def is_displayed(self):
