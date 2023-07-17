@@ -97,7 +97,7 @@ class Navigator:
             self.browser.set_path(page.path)
         page.post_navigate(**kwargs)
         if not getattr(page, "skip_wait_displayed", False):
-            page.wait_displayed()
+            page.wait_displayed(timeout="20s")
         return page
 
     def _backtrace(self, cls, **kwargs):
