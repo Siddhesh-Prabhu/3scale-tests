@@ -2,6 +2,7 @@
 from urllib.parse import urlparse
 
 import pytest
+import logging
 
 from testsuite import rawobj
 from testsuite.utils import blame
@@ -22,15 +23,20 @@ def gateway_environment(gateway_environment, testconfig, tools):
       Tinyproxy has a problem with http openshift routes
     - To not load configuration every time, we set APIcast to load configuration on boot instead
     """
+    logger.info("------------------Gateway Environment------------------")
     rhsso_url = urlparse(tools["no-ssl-sso"]).hostname
+    logger.info("RHSSO_URL : ", rhsso_url)
     proxy_endpoint = testconfig["proxy"]
-
+    logger.info("proxy_endpoint : ", proxy_endpoint)
     gateway_environment.update({"HTTP_PROXY": proxy_endpoint['http'],
                                 "HTTPS_PROXY": proxy_endpoint['https'],
                                 "NO_PROXY":
                                     f"backend-listener,system-master,system-provider,{rhsso_url}",
                                 "APICAST_CONFIGURATION_LOADER": "boot",
                                 "APICAST_CONFIGURATION_CACHE": 1000})
+    logger.info("gateway_environment.update : ", gateway_environment)
+    logger.info("NO_PROXY : ", NO_PROXY)
+    
     return gateway_environment
 
 
